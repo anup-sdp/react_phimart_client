@@ -13,15 +13,15 @@ const useAuth = () => {
   const [authTokens, setAuthTokens] = useState(getToken());
 
   useEffect(() => {
-    if (authTokens) fetchUserProfile();
+    if (authTokens) fetchUserProfile(authTokens); // uses authTokens from state when available
   }, [authTokens]);
 
   // Fetch user Profile
-  const fetchUserProfile = async () => {
-    try {
-      const response = await apiClient.get("/auth/users/me", {
-        headers: { Authorization: `JWT ${authTokens?.access}` },
-      });
+  const fetchUserProfile = async (tokens = null) => {
+	const tokensToUse = tokens || authTokens;
+    if (!tokensToUse) return;
+    try {		
+      const response = await apiClient.get("/auth/users/me", {headers: { Authorization: `JWT ${tokensToUse.access}` },});
       setUser(response.data);
     } catch (error) {
       console.log("Error Fetching user", error);
@@ -32,13 +32,15 @@ const useAuth = () => {
   const loginUser = async (userData) => {
     setErrorMsg("");
     try {
-      const response = await apiClient.post("/auth/jwt/create/", userData); // 
+      const response = await apiClient.post("/auth/jwt/create/", userData);
       console.log(response.data);
-      setAuthTokens(response.data);
-      localStorage.setItem("authTokens", JSON.stringify(response.data));
+      
+      const newTokens = response.data;
+      setAuthTokens(newTokens); // beware its async. so cant use it directly below it now.
+      localStorage.setItem("authTokens", JSON.stringify(newTokens));
 
-      // After login set user
-      await fetchUserProfile();
+      // Pass the fresh tokens directly instead of relying on state
+      await fetchUserProfile(newTokens);
     } catch (error) {
       setErrorMsg(error.response.data?.detail);
     }
