@@ -181,10 +181,9 @@ const Register = () => {
                 className="input input-bordered w-full"
                 {...register("confirm_password", {
                   required: "Confirm Password is required",
-                  validate: (value) =>
-                    value === watch("password") || "Password do not match",
+                  validate: (value) => value === watch("password") || "Passwords do not match",   
                 })}
-              />
+              />  {/* confirm_password is extra field, so its deleted before submitting */}
               {errors.confirm_password && (
                 <span className="label-text-alt text-error">
                   {errors.confirm_password.message}
@@ -192,7 +191,7 @@ const Register = () => {
               )}
             </div>
 
-            <button type="submit" className="btn btn-primary w-full"></button>
+            <button type="submit" className="btn btn-primary w-full">Submit</button>
           </form>
 
           <div className="text-center mt-4">

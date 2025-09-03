@@ -87,39 +87,9 @@ export default Login;
 
 // http://localhost:5173/login
 
+// react-hook-form example also in react-intro app
+
 /*
-after login with email and password getting error:
-useAuth.js:22  GET https://drf-phimart.vercel.app/api/auth/users/me/ 403 (Forbidden)
-dispatchXhrRequest @ axios.js?v=8ea3b65f:1672
-xhr @ axios.js?v=8ea3b65f:1552
-dispatchRequest @ axios.js?v=8ea3b65f:2027
-_request @ axios.js?v=8ea3b65f:2248
-request @ axios.js?v=8ea3b65f:2139
-Axios.<computed> @ axios.js?v=8ea3b65f:2267
-wrap @ axios.js?v=8ea3b65f:8
-fetchUserProfile @ useAuth.js:22
-loginUser @ useAuth.js:39
-await in loginUser
-onSubmit @ Login.jsx:33
-(anonymous) @ react-hook-form.js?v=8ea3b65f:1506
-await in (anonymous)
-callCallback2 @ chunk-NXESFFTV.js?v=8ea3b65f:3680
-invokeGuardedCallbackDev @ chunk-NXESFFTV.js?v=8ea3b65f:3705
-invokeGuardedCallback @ chunk-NXESFFTV.js?v=8ea3b65f:3739
-invokeGuardedCallbackAndCatchFirstError @ chunk-NXESFFTV.js?v=8ea3b65f:3742
-executeDispatch @ chunk-NXESFFTV.js?v=8ea3b65f:7046
-processDispatchQueueItemsInOrder @ chunk-NXESFFTV.js?v=8ea3b65f:7066
-processDispatchQueue @ chunk-NXESFFTV.js?v=8ea3b65f:7075
-dispatchEventsForPlugins @ chunk-NXESFFTV.js?v=8ea3b65f:7083
-(anonymous) @ chunk-NXESFFTV.js?v=8ea3b65f:7206
-batchedUpdates$1 @ chunk-NXESFFTV.js?v=8ea3b65f:18966
-batchedUpdates @ chunk-NXESFFTV.js?v=8ea3b65f:3585
-dispatchEventForPluginEventSystem @ chunk-NXESFFTV.js?v=8ea3b65f:7205
-dispatchEventWithEnableCapturePhaseSelectiveHydrationWithoutDiscreteEventReplay @ chunk-NXESFFTV.js?v=8ea3b65f:5484
-dispatchEvent @ chunk-NXESFFTV.js?v=8ea3b65f:5478
-dispatchDiscreteEvent @ chunk-NXESFFTV.js?v=8ea3b65f:5455Understand this error
-useAuth.js:25 Error Fetching user AxiosError {message: 'Request failed with status code 403', name: 'AxiosError', code: 'ERR_BAD_REQUEST', config: {…}, request: XMLHttpRequest, …}
-
-
-however after page refresh the error is gone.
+Link
+useNavigate
 */

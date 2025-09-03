@@ -218,7 +218,7 @@ const Navbar2 = () => {
         <li><Link to='/shop'>shop</Link></li>
       </ul>
     </div>
-    <a className="btn btn-ghost text-xl">daisyUI</a>
+    <Link to='/' className="btn btn-ghost text-xl">PhiMart</Link>
   </div>
   <div className="navbar-center hidden lg:flex">
     <ul className="menu menu-horizontal px-1">
@@ -275,7 +275,8 @@ const Navbar2 = () => {
           </a>
         </li>
         <li><a>Settings</a></li>
-        <li><a>Logout</a></li>
+		<li><Link to='/dashboard'>dashboard</Link></li>
+        <li><a onClick={logoutUser}>Logout</a></li>
       </ul>
     </div>
 	</div>

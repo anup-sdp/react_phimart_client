@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useNavigate, useParams } from "react-router";
 import ErroAlert from "../ErroAlert";
 import apiClient from "../../services/api-client";
@@ -8,20 +8,25 @@ const ActivateAccount = () => {
   const [error, setError] = useState("");
   const { uid, token } = useParams();
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const activatedUids = useRef(new Set()); // for dev mode
 
-  useEffect(() => {
+  useEffect(() => {    
+    if (activatedUids.current.has(uid)) return; // prevent double call in strict mode, and allow multi user account creation
+    activatedUids.current.add(uid);
+    
     apiClient
       .post("/auth/users/activation/", { uid, token })
       .then((res) => {
-        setMessage("Account activate successfully");
+        setMessage("Account activated successfully");
         setTimeout(() => navigate("/login"), 3000);
       })
       .catch((error) => {
+		//setError(JSON.stringify(error));
         setError("Something Went Wrong. Please check your activation link");
         console.log(error);
       });
-  }, []);
+  }, [uid, token, navigate]);
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-base-200">
@@ -52,8 +57,15 @@ const ActivateAccount = () => {
 };
 
 /* 
-
-http://localhost:5174/activate/OQ/cmewh1-009c16c67f002127368d56c1b99a831b
-
+sample activation link in email: http://localhost:5173/activate/OQ/cmewh1-009c16c67f002127368d56c1b99a831b
+OQ: uid user id
+cmewh1-009c16c67f002127368d56c1b99a831b: token
+search url values in react-router package
 */
 export default ActivateAccount;
+
+/*
+useNavigate
+useParams
+useRef
+*/
