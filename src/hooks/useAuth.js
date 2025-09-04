@@ -71,6 +71,25 @@ const useAuth = () => {
     }
   };
 
+  const handleAPIError = (
+    error,
+    defaultMessage = "Something Went Wrong! Try Again"
+  ) => {
+    console.log("Full error object:", error);
+    console.log("Error response data:", error.response?.data);
+
+    if (error.response && error.response.data) {
+      const errorMessage = Object.values(error.response.data).flat().join("\n");
+      setErrorMsg(errorMessage);
+      return { success: false, message: errorMessage };
+    }
+    setErrorMsg(defaultMessage);
+    return {
+      success: false,
+      message: defaultMessage,
+    };
+  };
+
   // Fetch user Profile
   const fetchUserProfile = async (tokens = null) => {
     const tokensToUse = tokens || authTokens;
@@ -112,7 +131,7 @@ const useAuth = () => {
   const loginUser = async (userData) => {
     setErrorMsg("");
     try {
-      const response = await apiClient.post("/auth/jwt/create/", userData);
+      const response = await apiClient.post("/auth/jwt/create/", userData); // Djoser endpoint, jwt endpoint is: api/token/
       console.log(response.data);
       
       const newTokens = response.data;
@@ -149,18 +168,7 @@ userData:
         message: "Registration successfull. Check your email to activate your account.",
       };
     } catch (error) {
-      if (error.response && error.response.data) {
-        const errorMessage = Object.values(error.response.data) // ---------
-          .flat()
-          .join("\n");
-        setErrorMsg(errorMessage);
-        return { success: false, message: errorMessage };
-      }
-      setErrorMsg("Registratation failed. Please try again");
-      return {
-        success: false,
-        message: "Registratation failed. Please try again",
-      };
+       return handleAPIError(error, "Registration Failed! Try Again");
     }
   };
 
@@ -171,31 +179,103 @@ userData:
     localStorage.removeItem("authTokens");
   };
 
-  return { user, errorMsg, isLoading, loginUser, registerUser, logoutUser, authTokens };
+  // Update User Profile
+  const updateUserProfile = async (data) => {
+    setErrorMsg("");
+    try {
+      console.log("Sending profile data:", data); // Debug log
+      
+      const response = await apiClient.patch("/auth/users/me/", data, {
+        headers: {
+          Authorization: `JWT ${authTokens?.access}`,
+          'Content-Type': 'application/json',
+        },
+      });
+      
+      // Update local user state with new data
+      setUser(prevUser => ({ ...prevUser, ...data }));
+      
+      return { success: true, message: "Profile updated successfully" };
+    } catch (error) {
+      return handleAPIError(error);
+    }
+  };
+
+  // Password Change
+  const changePassword = async (data) => {
+    setErrorMsg("");
+    try {
+      await apiClient.post("/auth/users/set_password/", data, {
+        headers: {
+          Authorization: `JWT ${authTokens?.access}`,
+        },
+      });
+      return { success: true, message: "Password changed successfully" };
+    } catch (error) {
+      return handleAPIError(error);
+    }
+  };
+
+  // Resend Account Activation Email
+  const resendActivationEmail = async (email) => {
+    setErrorMsg("");
+    try {
+      await apiClient.post("/auth/users/resend_activation/", { email });
+      return {
+        success: true,
+        message: "If your account needs activation, an email has been sent to your inbox.",
+      };
+    } catch (error) {
+      return handleAPIError(error, "Failed to send activation email");
+    }
+  };
+
+  // Reset Password Request
+  const requestPasswordReset = async (email) => {
+    setErrorMsg("");
+    try {
+      await apiClient.post("/auth/users/reset_password/", { email });
+      return {
+        success: true,
+        message: "Password reset email sent successfully! Check your inbox.",
+      };
+    } catch (error) {
+      return handleAPIError(error, "Failed to send password reset email");
+    }
+  };
+
+  // Confirm Password Reset
+  const confirmPasswordReset = async (uid, token, newPassword) => {
+    setErrorMsg("");
+    try {
+      await apiClient.post("/auth/users/reset_password_confirm/", {
+        uid,
+        token,
+        new_password: newPassword
+      });
+      return {
+        success: true,
+        message: "Password reset successfully! You can now login with your new password.",
+      };
+    } catch (error) {
+      return handleAPIError(error, "Password reset failed");
+    }
+  };
+
+  return { 
+    user, 
+    errorMsg, 
+    isLoading, 
+    loginUser, 
+    registerUser, 
+    logoutUser, 
+    updateUserProfile, 
+    changePassword, 
+    authTokens,
+    resendActivationEmail,
+    requestPasswordReset,
+    confirmPasswordReset
+  };
 };
 
 export default useAuth;
-
-
-
-/*
-alternative fix:
-// useAuth.js
-useEffect(() => {
-  if (!authTokens) return;         // ← guard
-  fetchUserProfile();
-}, [authTokens]);
-
-// fetchUserProfile
-const fetchUserProfile = async () => {
-  if (!authTokens?.access) return; // ← extra guard
-  try {
-    const { data } = await apiClient.get("/auth/users/me/", {
-      headers: { Authorization: `JWT ${authTokens.access}` },
-    });
-    setUser(data);
-  } catch (e) {
-    console.error("Error fetching user", e);
-  }
-};
-*/

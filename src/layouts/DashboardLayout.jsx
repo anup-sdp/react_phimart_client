@@ -1,10 +1,12 @@
 import { useState } from "react";
-import Navbar from "../components/Dashboard/Navbar";
-import Sidebar from "../components/Dashboard/Sidebar";
+import DashboardNavbar from "../components/dashboard/DashboardNavbar";
+import Sidebar from "../components/dashboard/Sidebar";
 import { Outlet } from "react-router";
+import useAuthContext from "../hooks/useAuthContext";
 
 const DashboardLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { user, logoutUser } = useAuthContext();
 
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
@@ -24,7 +26,7 @@ const DashboardLayout = () => {
       {/* Page content */}
       <div className="drawer-content flex flex-col">
         {/* Navbar */}
-        <Navbar sidebarOpen={sidebarOpen} />
+        <DashboardNavbar sidebarOpen={sidebarOpen} />
 
         {/* Main content */}
         <main className="p-6">
