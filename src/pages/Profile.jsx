@@ -1,8 +1,8 @@
 import { useForm } from "react-hook-form";
-import ProfileForm from "../components/Dashboard/Profile/ProfileForm";
+import ProfileForm from "../components/dashboard/profile/ProfileForm";
 import { useEffect, useState } from "react";
-import ProfileButtons from "../components/Dashboard/Profile/ProfileButtons";
-import PasswordChangeForm from "../components/Dashboard/Profile/PasswordChangeForm";
+import ProfileButtons from "../components/dashboard/profile/ProfileButtons";
+import PasswordChangeForm from "../components/dashboard/profile/PasswordChangeForm";
 import useAuthContext from "../hooks/useAuthContext";
 import ErroAlert from "../components/ErroAlert";
 
