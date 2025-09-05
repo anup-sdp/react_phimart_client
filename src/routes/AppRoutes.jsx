@@ -29,7 +29,7 @@ const AppRoutes = () => {
 						<Route path="shop" element={<Shop />} />
 						<Route path="login" element={<Login />} />
 						<Route path="register" element={<Register />} />
-						<Route path="activate/:uid/:token" element={<ActivateAccount />} />  
+						<Route path="activate/:uid/:token" element={<ActivateAccount />} />
 						{/* url values in react-router, from eg. http://localhost:5173/activate/OQ/cmewh1-009c16c67f002127368d56c1b99a831b */}
 						<Route path="password/reset/confirm/:uid/:token" element={<ResetPassword />} />
 						{/* url values from email link, eg. http://localhost:5173/password/reset/confirm/OQ/cmewh1-009c16c67f002127368d56c1b99a831b */}				
