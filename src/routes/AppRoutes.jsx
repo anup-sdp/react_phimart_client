@@ -5,7 +5,9 @@ import Home from "../pages/Home";
 import Shop from "../pages/Shop";
 //import Products from "../pages/Products";
 import ProductTest from "../components/products/ProductTest.jsx"; // my try
+import ProductDetail from "../pages/ProductDetail"; // details of a product
 import { AuthProvider } from "../context/AuthContext.jsx";
+import { CartProvider } from "../context/CartContext.jsx";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Dashboard  from "../pages/Dashboard";
@@ -18,38 +20,41 @@ import ResetPassword from "../pages/ResetPassword";
 const AppRoutes = () => {
 	return (
 		<AuthProvider>
-			<BrowserRouter>
-				<Routes>
-					{/* public routes */}	
-					<Route element={<MainLayout />}>
-						<Route path="/" element={<Home />} />
-						{/* <Route path="/" element={<ProductTest />} /> */}
-						{/* <Route path="products" element={<Products />} /> */}
-						<Route path="about" element={<About />} />
-						<Route path="shop" element={<Shop />} />
-						<Route path="login" element={<Login />} />
-						<Route path="register" element={<Register />} />
-						<Route path="activate/:uid/:token" element={<ActivateAccount />} />
-						{/* url values in react-router, from eg. http://localhost:5173/activate/OQ/cmewh1-009c16c67f002127368d56c1b99a831b */}
-						<Route path="password/reset/confirm/:uid/:token" element={<ResetPassword />} />
-						{/* url values from email link, eg. http://localhost:5173/password/reset/confirm/OQ/cmewh1-009c16c67f002127368d56c1b99a831b */}				
-					</Route>
+			<CartProvider>
+				<BrowserRouter>
+					<Routes>
+						{/* public routes */}	
+						<Route element={<MainLayout />}>
+							<Route path="/" element={<Home />} />
+							{/* <Route path="/" element={<ProductTest />} /> */}
+							{/* <Route path="products" element={<Products />} /> */}
+							<Route path="about" element={<About />} />
+							<Route path="shop" element={<Shop />} />
+							<Route path="login" element={<Login />} />
+							<Route path="register" element={<Register />} />
+							<Route path="activate/:uid/:token" element={<ActivateAccount />} />
+							{/* url values in react-router, from eg. http://localhost:5173/activate/OQ/cmewh1-009c16c67f002127368d56c1b99a831b */}
+							<Route path="password/reset/confirm/:uid/:token" element={<ResetPassword />} />
+							{/* url values from email link, eg. http://localhost:5173/password/reset/confirm/OQ/cmewh1-009c16c67f002127368d56c1b99a831b */}
+							<Route path="shop/:productId" element={<ProductDetail />} />
+						</Route>
 
-					{/* Private Routes  */}
-					<Route
-						path="dashboard"
-						element={
-							<PrivateRoute>
-								<DashboardLayout />
-							</PrivateRoute>
-						}
-					>
-						<Route index element={<Dashboard />} />   {/* http://localhost:5173/dashboard */}
-						<Route path="profile" element={<Profile />} />    {/* http://localhost:5173/dashboard/profile */}
-					</Route>
+						{/* Private Routes  */}
+						<Route
+							path="dashboard"
+							element={
+								<PrivateRoute>
+									<DashboardLayout />
+								</PrivateRoute>
+							}
+						>
+							<Route index element={<Dashboard />} />   {/* http://localhost:5173/dashboard */}
+							<Route path="profile" element={<Profile />} />    {/* http://localhost:5173/dashboard/profile */}
+						</Route>
 
-				</Routes>		
-			</BrowserRouter>
+					</Routes>		
+				</BrowserRouter>
+			</CartProvider>
 		</AuthProvider>	
 	);
 };

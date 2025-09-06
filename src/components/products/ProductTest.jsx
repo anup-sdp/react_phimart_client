@@ -1,4 +1,5 @@
 // my custom try
+// for shimmering effect, tailwind class "animate-pulse" used if loading, line 40
 import { useEffect, useState } from "react";
 import axios from 'axios';
 

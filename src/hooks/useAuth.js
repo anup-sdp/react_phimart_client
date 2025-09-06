@@ -281,3 +281,11 @@ userData:
 export default useAuth;
 
 // "http://localhost:5173"
+
+/*
+activativation email link was:
+https://react-phimart-client.vercel.app/activate/OQ/cvmqox-f001d6d9bf1b04adcfd2cb07ea30d535
+tried it local host and it worked.
+http://localhost:5173/activate/OQ/cvmqox-f001d6d9bf1b04adcfd2cb07ea30d535
+activated the account.
+*/

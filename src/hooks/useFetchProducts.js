@@ -20,8 +20,8 @@ const useFetchProduct = (
         const response = await apiClient.get(url);
         const data = await response.data;
 
-        setProducts(data.results); // data.results used
-        setTotalPages(Math.ceil(data.count / data.results.length)); // data.results.length used
+        setProducts(data.results);
+        setTotalPages(Math.ceil(data.count / data.results.length));
       } catch (error) {
         console.log(error);
       } finally {

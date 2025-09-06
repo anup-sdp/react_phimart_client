@@ -13,9 +13,9 @@ createRoot(document.getElementById('root')).render(
 */
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>    
+//   <StrictMode>    
       <AppRoutes />
-  </StrictMode>,
+//   </StrictMode>,
 )
 
 // https://reactrouter.com/start/declarative/installation
