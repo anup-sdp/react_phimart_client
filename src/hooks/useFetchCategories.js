@@ -4,7 +4,7 @@ import apiClient from "../services/api-client";
 const useFetchCategories = () => {
   const [categories, setCategories] = useState([]);
   useEffect(() => {
-    apiClient.get("/categories").then((res) => setCategories(res.data));
+    apiClient.get("/categories").then((res) => {setCategories(res.data); console.log("categories data =",res.data)});
   }, []);
 
   return categories;

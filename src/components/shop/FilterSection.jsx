@@ -74,7 +74,7 @@ const FilterSection = ({
           onChange={(e) => handleCategoryChange(e.target.value)}
         >
           <option value="">All Categories</option>
-          {categories.map((category) => (
+          {categories?.results?.map((category) => (
             <option key={category.id} value={category.id}>
               {category.name}
             </option>
@@ -120,3 +120,41 @@ export default FilterSection;
 // in range input className="w-full range range-secondary" for daisyui range slider style
 
 // page filter: http://127.0.0.1:8000/api/products/?page=1
+
+/*
+get https://drf-phimart.vercel.app/api/categories/
+
+response:
+{
+    "count": 4,
+    "next": null,
+    "previous": null,
+    "results": [
+        {
+            "id": 1,
+            "name": "Electronics",
+            "description": "Devices and gadgets",
+            "product_count": 10
+        },
+        {
+            "id": 2,
+            "name": "Fashion",
+            "description": "Clothing and accessories",
+            "product_count": 10
+        },
+        {
+            "id": 3,
+            "name": "Home Appliances",
+            "description": "Appliances for home use",
+            "product_count": 10
+        },
+        {
+            "id": 4,
+            "name": "Books",
+            "description": "Books and educational materials",
+            "product_count": 10
+        }
+    ]
+}
+
+*/

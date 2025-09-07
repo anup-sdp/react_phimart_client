@@ -25,10 +25,7 @@ const ProductDetail = () => {
   return (
     <div className="w-3/4 mx-auto px-4 py-8">
       <div className="mb-6">
-        <Link
-          to="/shop"
-          className="flex items-center text-sm text-base-content/70 hover:text-base-content transition-colors"
-        >
+        <Link to="/shop" className="flex items-center text-sm text-base-content/70 hover:text-base-content transition-colors">        
           <FaArrowLeft className="mr-2 h-4 w-4" />
           Back to products
         </Link>
@@ -94,5 +91,10 @@ const ProductDetail = () => {
 
 export default ProductDetail;
 
-// details of a product
-// page at eg. http://localhost:5173/shop/1
+// details of a product, page at eg. http://localhost:5173/shop/1
+
+/*
+react Suspense
+tailwind class: animate-pulse
+*/
+

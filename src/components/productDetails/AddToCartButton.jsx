@@ -7,7 +7,7 @@ const AddToCartButton = ({ product }) => {
   const [quantity, setQuantity] = useState(1);
   const [isAdding, setIsAdding] = useState(false);
   const [isAdded, setIsAdded] = useState(false);
-  const { AddCartItems } = useCartContext();
+  const { addCartItems } = useCartContext();
 
   const decreaseQuantity = () => {
     if (quantity > 1) {
@@ -24,7 +24,7 @@ const AddToCartButton = ({ product }) => {
   const addToCart = async () => {
     setIsAdding(true);
     try {
-      await AddCartItems(product.id, quantity);
+      await addCartItems(product.id, quantity);
       setIsAdded(true);  
     } catch (error) {
       console.log(error);      

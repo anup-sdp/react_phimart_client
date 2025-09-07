@@ -1,19 +1,21 @@
 // src/hooks/useCart.js
 import { useCallback, useEffect, useRef, useState } from "react";
 import authApiClient from "../services/auth-api-client";
+import useAuthContext from "./useAuthContext";
 
 const useCart = () => {
-  const [authToken] = useState(
-    () => JSON.parse(localStorage.getItem("authTokens"))?.access || null
-  );
+
+  const [authTokens, setAuthTokens] = useState(() => JSON.parse(localStorage.getItem("authTokens"))?.access || null);  
+  const { user } = useAuthContext();  // user, authTokens
   const [cart, setCart] = useState(null);
   const [cartId, setCartId] = useState(() => localStorage.getItem("cartId"));
   const [loading, setLoading] = useState(false);
   const isRunningRef = useRef(false);
 
   // helper: fetch cart by id and set state; returns response data or null
-  const fetchCartById = useCallback(
+  const fetchCartById = useCallback(  // useCallback
     async (id) => {
+		if(!user) return; // logged out
       if (!id) return null;
       try {
         const res = await authApiClient.get(`/carts/${id}/`);
@@ -30,9 +32,7 @@ const useCart = () => {
         console.error("fetchCartById error:", err);
         return null;
       }
-    },
-    []
-  );
+    },[]);  
 
   // create or get cart (idempotent)
   const createOrGetCart = useCallback(async () => {  // useCallback
@@ -49,7 +49,8 @@ const useCart = () => {
       }
 
       // Ask backend to create or return existing one
-      const response = await authApiClient.post("/carts/"); // ----------- error ?
+	  if(!user) return; // logged out
+      const response = await authApiClient.post("/carts/"); // ----------- 
       const data = response.data;
       if (data?.id) {
         localStorage.setItem("cartId", data.id);
@@ -64,10 +65,11 @@ const useCart = () => {
       isRunningRef.current = false;
       setLoading(false);
     }
-  }, [cartId, fetchCartById, authToken]);
+  }, [cartId, fetchCartById, authTokens, user]); // problem: cartId remains same if a different user logs in, although changes after page refresh. solved bu using user
+
 
   // Add item: ensure cart exists, then post and refresh cart state
-  const AddCartItems = useCallback(
+  const addCartItems = useCallback(
     async (product_id, quantity) => {
       setLoading(true);
       try {
@@ -131,10 +133,10 @@ const useCart = () => {
   useEffect(() => {
     const initializeCart = async () => {
       setLoading(true);
-      await createOrGetCart(); // ----------- error ?
+      await createOrGetCart(); 
       setLoading(false);
     };
-    initializeCart(); // ----------- error ?
+    initializeCart(); 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [createOrGetCart]);
 
@@ -144,7 +146,7 @@ const useCart = () => {
     cart,
     loading,
     createOrGetCart,
-    AddCartItems,
+    addCartItems,
     updateCartItemQuantity,
     deleteCartItems,
   };
@@ -155,5 +157,5 @@ export default useCart;
 // product detail: http://localhost:5173/shop/1
 
 /*
-useCallback
+useEffect vs useCallback (similar to useMemo)
 */
