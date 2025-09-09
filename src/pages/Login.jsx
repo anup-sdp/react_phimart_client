@@ -21,8 +21,8 @@ const Login = () => {
     setLocalErrorMsg("");
     setSuccessMsg("");
     try {
-      await loginUser(data);
-      navigate("/dashboard");
+      const response = await loginUser(data);
+      if (response.success) navigate("/dashboard");
     } catch (error) {
       console.log("Login Failed", error);
     } finally {

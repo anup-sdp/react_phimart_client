@@ -140,8 +140,10 @@ const useAuth = () => {
 
       // Pass the fresh tokens directly instead of relying on state
       await fetchUserProfile(newTokens);
+	  return { success: true };
     } catch (error) {      
 	  setErrorMsg(error.response?.data?.detail || "Login failed");
+	  return { success: false };
     } finally {
       setIsLoading(false);
     }
@@ -177,6 +179,7 @@ userData:
     setAuthTokens(null);
     setUser(null);
     localStorage.removeItem("authTokens");
+	localStorage.removeItem("cartId");
   };
 
   // Update User Profile

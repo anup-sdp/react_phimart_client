@@ -28,3 +28,8 @@ ReactDOM.createRoot(root).render(
 */
 
 // https://reactrouter.com/start/declarative/routing
+
+/*
+npm run dev
+http://localhost:5173/
+*/

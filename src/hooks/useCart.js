@@ -144,6 +144,7 @@ const useCart = () => {
 
   return {
     cart,
+	cartId,
     loading,
     createOrGetCart,
     addCartItems,

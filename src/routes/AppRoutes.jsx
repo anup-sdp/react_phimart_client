@@ -17,6 +17,7 @@ import DashboardLayout from "../layouts/DashboardLayout";
 import Profile from "../pages/Profile";
 import ResetPassword from "../pages/ResetPassword";
 import Cart from "../pages/Cart";
+import Orders from "../pages/Orders";
 
 const AppRoutes = () => {
 	return (
@@ -52,6 +53,7 @@ const AppRoutes = () => {
 							<Route index element={<Dashboard />} />   {/* http://localhost:5173/dashboard */}
 							<Route path="profile" element={<Profile />} />    {/* http://localhost:5173/dashboard/profile */}
 							<Route path="cart" element={<Cart />} />
+							<Route path="orders" element={<Orders />} />
 						</Route>
 
 					</Routes>		

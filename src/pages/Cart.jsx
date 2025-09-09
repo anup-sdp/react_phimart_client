@@ -6,6 +6,7 @@ import CartSummary from "../components/cart/CartSummary";
 const Cart = () => {
   const {
     cart,
+	cartId,
     loading,
     createOrGetCart,
     updateCartItemQuantity,
@@ -42,10 +43,7 @@ const Cart = () => {
       return {
         ...prevLocalCart,
         items: updatedItmes,
-        total_price: updatedItmes.reduce(
-          (sum, item) => sum + item.total_price,
-          0
-        ),
+        total_price: updatedItmes.reduce((sum, item) => sum + item.total_price, 0), // reduce
       };
     });
 
@@ -58,6 +56,7 @@ const Cart = () => {
   };
 
   const handleRemoveItem = async (itemId) => {
+	//const prevLocalCartCopy = localCart; // store a copy of localCart
     setLocalCart((prevLocalCart) => {
       const updatedItems = prevLocalCart.items.filter(
         (item) => item.id != itemId
@@ -66,10 +65,7 @@ const Cart = () => {
       return {
         ...prevLocalCart,
         items: updatedItems,
-        total_price: updatedItems.reduce(
-          (sum, item) => sum + item.total_price,
-          0
-        ),
+        total_price: updatedItems.reduce((sum, item) => sum + item.total_price,0),        
       };
     });
 
@@ -77,6 +73,7 @@ const Cart = () => {
       await deleteCartItems(itemId);
     } catch (error) {
       console.log(error);
+	  //setLocalCart(prevLocalCartCopy); // Rollback to previous state if API fails
     }
   };
 
@@ -96,6 +93,8 @@ const Cart = () => {
           <CartSummary
             totalPrice={localCart.total_price}
             itemCount={localCart.items.length}
+			cartId={cartId}
+			createOrGetCart={createOrGetCart}
           />
         </div>
       </div>
@@ -105,4 +104,55 @@ const Cart = () => {
 
 export default Cart;
 
-// http://localhost:5173/dashboard/cart
+/*
+react <Suspense> component:
+it's a powerful feature for managing asynchronous operations (like data fetching or lazy loading) 
+in a declarative way. It allows you to display a fallback UI while waiting for content to load.
+
+<Suspense fallback={<LoadingComponent />}>
+  <AsyncComponent />   // e.g., lazy-loaded or data-fetching component
+</Suspense>
+
+.reduce
+*/
+
+// react urls at: http://localhost:5173/dashboard/cart
+
+/*
+backend: get https://drf-phimart.vercel.app/api/carts/ with authorization
+response:
+{
+    "count": 1,
+    "next": null,
+    "previous": null,
+    "results": [
+        {
+            "id": "2d17a210-14b4-467d-90b5-7e1c5cb5248b",
+            "user": 6,
+            "items": [
+                {
+                    "id": 2,
+                    "product": {
+                        "id": 1,
+                        "name": "Smartphone",
+                        "price": 213.8
+                    },
+                    "quantity": 1,
+                    "total_price": 213.8
+                },
+                {
+                    "id": 4,
+                    "product": {
+                        "id": 28,
+                        "name": "Blender",
+                        "price": 97.47
+                    },
+                    "quantity": 2,
+                    "total_price": 194.94
+                }
+            ],
+            "total_price": 408.74
+        }
+    ]
+}
+*/
