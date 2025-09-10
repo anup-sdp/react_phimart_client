@@ -18,6 +18,8 @@ import Profile from "../pages/Profile";
 import ResetPassword from "../pages/ResetPassword";
 import Cart from "../pages/Cart";
 import Orders from "../pages/Orders";
+import PaymentSuccess from "../pages/PaymentSuccess";
+
 
 const AppRoutes = () => {
 	return (
@@ -54,6 +56,7 @@ const AppRoutes = () => {
 							<Route path="profile" element={<Profile />} />    {/* http://localhost:5173/dashboard/profile */}
 							<Route path="cart" element={<Cart />} />
 							<Route path="orders" element={<Orders />} />
+							<Route path="payment/success/" element={<PaymentSuccess />} />
 						</Route>
 
 					</Routes>		

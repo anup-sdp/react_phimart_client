@@ -6,6 +6,7 @@ import authApiClient from "../../services/auth-api-client";
 const OrderCard = ({ order, onCancel }) => {
   const { user } = useAuthContext();
   const [status, setStatus] = useState(order.status);
+  const [loading, setLoading] = useState(false);
 
   const handleStatusChange = async (event) => {
     const newStatus = event.target.value;
@@ -24,13 +25,34 @@ const OrderCard = ({ order, onCancel }) => {
     }
   };
 
+  const handlePayment = async () => {
+    setLoading(true);
+    try {
+      const response = await authApiClient.post("/payment/initiate/", {
+        amount: order.total_price,
+        orderId: order.id,
+        numItems: order.items?.length,
+      });
+
+      if (response.data.payment_url) {
+        setLoading(false);
+        window.location.href = response.data.payment_url;
+      } else {
+		console.log(`Payment failed : ${response.data?.error}`);
+        alert(`Payment failed : ${response.data?.error}`);		
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="bg-white rounded-lg shadow-lg mb-8 overflow-hidden">
       <div className="bg-gray-100 p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
           <h2 className="text-lg font-bold">Order ID: #{order.id}</h2>
           <p className="text-gray-600 text-sm">Placed on {order.created_at}</p>
-		  {user.is_staff && <p className="text-gray-600 text-sm">user id: {order.user}</p>}		  
+		  {user.is_staff && <p className="text-gray-600 text-sm">user: {order.user?.full_name || order.user?.email || 'anon'}</p>}
         </div>
         <div className="flex gap-2">
           {user.is_staff ? (
@@ -87,8 +109,12 @@ const OrderCard = ({ order, onCancel }) => {
           </div>
         </div>
         {!user.is_staff && order.status === "Not Paid" && (
-          <button className="mt-4 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors">
-            Pay Now
+          <button 
+              className="mt-4 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors" 
+              onClick={handlePayment} 
+              disabled={loading}
+            >
+            {loading ? "Processing..." : "Pay Now"}
           </button>
         )}
       </div>

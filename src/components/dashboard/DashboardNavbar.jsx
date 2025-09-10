@@ -5,7 +5,7 @@ import useAuthContext from "../../hooks/useAuthContext";
 const DashboardNavbar = ({ sidebarOpen }) => {
 	const { user, logoutUser } = useAuthContext();
   return (
-    <div className="navbar bg-base-100 border-b">
+    <div className="navbar bg-base-100 border-b border-gray-300">
       <div className="flex-none lg:hidden">
         <label htmlFor="drawer-toggle" className="btn btn-square btn-ghost">
           {sidebarOpen ? (
@@ -17,7 +17,8 @@ const DashboardNavbar = ({ sidebarOpen }) => {
       </div>
       <div className="flex-1">
         <h2 className="text-lg font-semibold">Dashboard</h2>
-      </div>
+		<h3 className="text-md text-gray-400">user: {user.full_name}</h3>
+      </div>	  
       <div className="flex-none">
         <div className="dropdown dropdown-end">
           <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
