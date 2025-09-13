@@ -1,0 +1,133 @@
+module 28-39 sdp, phitron, react project: phimart-client
+
+npm create vite@latest
+-------------
+npm create vite@6.1.0 (as romjan ali vai)
+project name: phimart-client
+>>React
+>>JavaScript
+--
+cd phimart-client
+npm install
+code .
+npm run dev
+--
+vs code extensions for react: pretier, react extension pack,
+
+
+28.3 vs code settings > type emmet > Emmet: Include Languages
+add item, 
+key: javascript
+value: javascriptreact
+
+div.container>ul>li*3
+<div className="container">
+    <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+</div>
+
+
+module 28.6:
+install tailwind css using vite: https://tailwindcss.com/docs/installation/using-vite
+npm install tailwindcss @tailwindcss/vite
+in vite.config.js add tailwind
+add @import "tailwindcss"; in css file which main.jsx imports
+
+28.12: npm install lucide-react  (icon library)
+https://lucide.dev/guide/packages/lucide-react
+
+29.9: npm install axios
+
+
+npm install react-hook-form
+
+31.1
+react-router https://reactrouter.com/home
+(declarative mode ?)
+npm i react-router 
+npm install react-icons
+npm install swiper
+daisyUI: Navbar, Footer, Hero, Button
+npm i -D daisyui@latest
+npm install tailwindcss@latest @tailwindcss/vite@latest daisyui@latest
+
+31.7: ui design ideads. (search good react templates) -------------------------
+
+
+31.9:
+carousel: search react awesome components: https://github.com/brillout/awesome-react-components
+swiper (for carousel slider: react, vue, plain js): https://swiperjs.com/get-started
+npm install swiper
+https://swiperjs.com/demos#autoplay
+page built by this: HeroCarousel.jsx
+
+alternative slider: react-slick, https://react-slick.neostack.com/docs/example/
+
+31.11:
+react icons:
+npm install react-icons --save
+https://react-icons.github.io/react-icons/
+
+34.1: context api
+
+
+34.4:
+https://react-hook-form.com/get-started
+npm install react-hook-form
+
+
+36.4: react <Suspense> -- show something untill child loaded
+
+36.8: axios interceptors
+
+37.7: some h.w. (show real orders of users instead of hardcoded ones)
+
+
+module 38.1: sslcommerz
+https://sslcommerz.com/  > services > payment gateway > View Docs > 
+(https://sslcommerz.com/integration-document/)  read the full doc (long) - (see Request Parameters)
+
+1. create demo/sandbox account for testing: https://developer.sslcommerz.com/registration/
+application domain name: www.anup-project.com ... email: anupbarua30@gmail.com pw:aB@12345
+email was sent to me of my sslcomerz sandbox account details.
+email starred for latter find.
+
+
+2. Library Resources for Integration > https://github.com/sslcommerz > SSLCommerz-Python: https://github.com/sslcommerz/SSLCommerz-Python
+follow it.
+
+
+38.3: open drf backend in vs code,
+activate venv, 
+pip install sslcommerz-lib  --(alternative: used in fastkart project: pip install sslcommerz-python-api)
+write in function initiate_payment in orders app. add urls in app api,
+
+
+at 39.11, 0:30
+
+
+
+
+
+
+----------------
+git init
+git add .
+git commit -m "first commit m-34.4"
+git branch -M main
+git remote add origin https://github.com/anup-sdp/react_phimart_client.git
+git push -u origin main
+---
+git add .
+git commit -m "v1.9"
+git push -u origin main
+----------------
+
+local : "http://localhost:5173"
+live at vercel: https://react-phimart-client.vercel.app/
+
+
+

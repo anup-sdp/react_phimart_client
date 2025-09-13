@@ -102,6 +102,7 @@ const useAuth = () => {
       setUser(response.data);
     } catch (error) {
       console.log("Error Fetching user", error);
+	  console.log('error.response?.status:', error.response?.status);
       // If unauthorized, try to refresh token
       if (error.response?.status === 401 && tokensToUse.refresh) {
         try {

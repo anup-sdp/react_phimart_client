@@ -4,13 +4,6 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import AppRoutes from './routes/AppRoutes.jsx'
 
-/* 
-createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
-)
-*/
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>    
@@ -33,3 +26,7 @@ ReactDOM.createRoot(root).render(
 npm run dev
 http://localhost:5173/
 */
+
+// to do: now a user can review a product multiple times, restrict it to once. '
+// in dashboard remove hard coded reviews, make them dynamic
+// many more api endpoints left to implement

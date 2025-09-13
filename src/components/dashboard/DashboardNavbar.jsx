@@ -17,7 +17,7 @@ const DashboardNavbar = ({ sidebarOpen }) => {
       </div>
       <div className="flex-1">
         <h2 className="text-lg font-semibold">Dashboard</h2>
-		<h3 className="text-md text-gray-400">user: {user.full_name}</h3>
+		<h3 className="text-md text-gray-400">user: {user.full_name || user.email}</h3>
       </div>	  
       <div className="flex-none">
         <div className="dropdown dropdown-end">

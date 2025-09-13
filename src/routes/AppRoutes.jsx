@@ -19,6 +19,7 @@ import ResetPassword from "../pages/ResetPassword";
 import Cart from "../pages/Cart";
 import Orders from "../pages/Orders";
 import PaymentSuccess from "../pages/PaymentSuccess";
+import AddProduct from "../pages/AddProduct";
 
 
 const AppRoutes = () => {
@@ -57,6 +58,7 @@ const AppRoutes = () => {
 							<Route path="cart" element={<Cart />} />
 							<Route path="orders" element={<Orders />} />
 							<Route path="payment/success/" element={<PaymentSuccess />} />
+							<Route path="products/add" element={<AddProduct />} />
 						</Route>
 
 					</Routes>		
